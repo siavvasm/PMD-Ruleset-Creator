@@ -14,6 +14,8 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JFrame;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
@@ -38,7 +40,7 @@ import javax.sound.sampled.DataLine;
 import javax.sound.sampled.TargetDataLine;
 import javax.sound.sampled.Line;
 
-public class RulesetCreator  extends Frame  implements ActionListener   {
+public class RulesetCreator  extends Frame  implements WindowListener,ActionListener   {
 	
 /* Declare the GUI Components */
 static JFrame frame;				// The frame that implements the app's GUI
@@ -52,23 +54,72 @@ static JButton save;				// A button for saving the ruleset.
 static JButton add;					// A button for adding the new rule to the ruleset.
 BufferedWriter writer;
 
+/* List Feature */
+static JComboBox rulesets;
+static JComboBox rules;
+static  String[] availRuleSets;
+static DefaultComboBoxModel[] comboModels; 
+static JButton addFromList;
+
+
+	public static void initComboBoxes(){
+		String[] availRuleSets = {"android","basic","braces","clone","codesize","comments","controversial","coupling","design","empty","finalizers","imports","j2ee","javabeans","junit","logging-jakarta-commons","logging-java","migrating","naming","optimizations","strictexception","strings","sunsecure","typeresolution","unnecessary","unusedcode","unusedcode", "imports"};
+		comboModels = new DefaultComboBoxModel[26];
+		comboModels[0] = new DefaultComboBoxModel(new String[]{"","CallSuperFirst","CallSuperLast","DoNotHardCodeSDCard"});
+		comboModels[1] = new DefaultComboBoxModel(new String[]{"","JumbledIncrementer","ForLoopShouldBeWhileLoop","OverrideBothEqualsAndHashcode","DoubleCheckedLocking","ReturnFromFinallyBlock","UnconditionalIfStatement","BooleanInstantiation","CollapsibleIfStatements","ClassCastExceptionWithToArray","AvoidDecimalLiteralsInBigDecimalConstructor","MisplacedNullCheck","AvoidThreadGroup","BrokenNullCheck","BigIntegerInstantiation","AvoidUsingOctalValues","AvoidUsingHardCodedIP","CheckResultSet","AvoidMultipleUnaryOperators","ExtendsObject","CheckSkipResult","AvoidBranchingStatementAsLastInLoop","DontCallThreadRun","DontUseFloatTypeForLoopIndices","SimplifiedTernary"});
+		comboModels[2] = new DefaultComboBoxModel(new String[]{"","IfStmtsMustUseBraces","WhileLoopsMustUseBraces","IfElseStmtsMustUseBraces","ForLoopsMustUseBraces"});
+		comboModels[3] = new DefaultComboBoxModel(new String[]{"","ProperCloneImplementation","CloneThrowsCloneNotSupportedException","CloneMethodMustImplementCloneable","CloneMethodReturnTypeMustMatchClassName","CloneMethodMustBePublic"});
+		comboModels[4] = new DefaultComboBoxModel(new String[]{"","NPathComplexity","ExcessiveMethodLength","ExcessiveParameterList","ExcessiveClassLength","CyclomaticComplexity","StdCyclomaticComplexity","ModifiedCyclomaticComplexity","ExcessivePublicCount","TooManyFields","NcssMethodCount","NcssTypeCount","NcssConstructorCount","TooManyMethods"});
+		comboModels[5] = new DefaultComboBoxModel(new String[]{"","CommentRequired","CommentSize","CommentContent","CommentDefaultAccessModifier"});
+		comboModels[6] = new DefaultComboBoxModel(new String[]{"","UnnecessaryConstructor","NullAssignment","OnlyOneReturn","AssignmentInOperand","AtLeastOneConstructor","DontImportSun","SuspiciousOctalEscape","CallSuperInConstructor","UnnecessaryParentheses","DefaultPackage","DataflowAnomalyAnalysis","AvoidFinalLocalVariable","AvoidUsingShortType","AvoidUsingVolatile","AvoidUsingNativeCode","AvoidAccessibilityAlteration","DoNotCallGarbageCollectionExplicitly","OneDeclarationPerLine","AvoidPrefixingMethodParameters","AvoidLiteralsInIfCondition","UseObjectForClearerAPI","UseConcurrentHashMap"});
+		comboModels[7] = new DefaultComboBoxModel(new String[]{"","CouplingBetweenObjects","ExcessiveImports","LooseCoupling","LoosePackageCoupling","LawOfDemeter"});
+		comboModels[8] = new DefaultComboBoxModel(new String[]{"","UseSingleton","UseUtilityClass","SimplifyBooleanReturns","SimplifyBooleanExpressions","SwitchStmtsShouldHaveDefault","AvoidDeeplyNestedIfStmts","AvoidReassigningParameters","SwitchDensity","ConstructorCallsOverridableMethod","AccessorClassGeneration","FinalFieldCouldBeStatic","CloseResource","NonStaticInitializer","DefaultLabelNotLastInSwitchStmt","NonCaseLabelInSwitchStatement","OptimizableToArrayCall","BadComparison","EqualsNull","ConfusingTernary","InstantiationToGetClass","IdempotentOperations","SimpleDateFormatNeedsLocale","ImmutableField","UseLocaleWithCaseConversions","AvoidProtectedFieldInFinalClass","AssignmentToNonFinalStatic","MissingStaticMethodInNonInstantiatableClass","AvoidSynchronizedAtMethodLevel","MissingBreakInSwitch","UseNotifyAllInsteadOfNotify","AvoidInstanceofChecksInCatchClause","AbstractClassWithoutAbstractMethod","SimplifyConditional","CompareObjectsWithEquals","PositionLiteralsFirstInComparisons","PositionLiteralsFirstInCaseInsensitiveComparisons","UnnecessaryLocalBeforeReturn","NonThreadSafeSingleton","SingleMethodSingleton","SingletonClassReturningNewInstance","UncommentedEmptyMethodBody","UncommentedEmptyConstructor","AvoidConstantsInterface","UnsynchronizedStaticDateFormatter","PreserveStackTrace","UseCollectionIsEmpty","ClassWithOnlyPrivateConstructorsShouldBeFinal","EmptyMethodInAbstractClassShouldBeAbstract","SingularField","ReturnEmptyArrayRatherThanNull","AbstractClassWithoutAnyMethod","TooFewBranchesForASwitchStatement","LogicInversion","UseVarargs","FieldDeclarationsShouldBeAtStartOfClass","GodClass","AvoidProtectedMethodInFinalClassNotExtending","","","","","","","","","","","","","","","","",});
+		comboModels[9] = new DefaultComboBoxModel(new String[]{"","EmptyCatchBlock","EmptyIfStmt","EmptyWhileStmt","EmptyTryBlock","EmptyFinallyBlock","EmptySwitchStatements","EmptySynchronizedBlock","EmptyStatementNotInLoop","EmptyInitializer","EmptyStatementBlock","EmptyStaticInitializer"});
+		comboModels[10] = new DefaultComboBoxModel(new String[]{"","EmptyFinalizer","FinalizeOnlyCallsSuperFinalize","FinalizeOverloaded","FinalizeDoesNotCallSuperFinalize","FinalizeShouldBeProtected","AvoidCallingFinalize"});
+		comboModels[11] = new DefaultComboBoxModel(new String[]{"","DuplicateImports","DontImportJavaLang","UnusedImports","ImportFromSamePackage","TooManyStaticImports","UnnecessaryFullyQualifiedName"});
+		comboModels[12] = new DefaultComboBoxModel(new String[]{"","UseProperClassLoader","MDBAndSessionBeanNamingConvention","RemoteSessionInterfaceNamingConvention","LocalInterfaceSessionNamingConvention","LocalHomeNamingConvention","RemoteInterfaceNamingConvention","DoNotCallSystemExit","StaticEJBFieldShouldBeFinal","DoNotUseThreads"});
+		comboModels[13] = new DefaultComboBoxModel(new String[]{"","BeanMembersShouldSerialize","MissingSerialVersionUID"});
+		comboModels[14] = new DefaultComboBoxModel(new String[]{"","JUnitStaticSuite","JUnitSpelling","JUnitAssertionsShouldIncludeMessage","JUnitTestsShouldIncludeAssert","TestClassWithoutTestCases","UnnecessaryBooleanAssertion","UseAssertEqualsInsteadOfAssertTrue","UseAssertSameInsteadOfAssertTrue","UseAssertNullInsteadOfAssertTrue","SimplifyBooleanAssertion","JUnitTestContainsTooManyAsserts","UseAssertTrueInsteadOfAssertEquals"});
+		comboModels[15] = new DefaultComboBoxModel(new String[]{"","UseCorrectExceptionLogging","ProperLogger","GuardDebugLogging","GuardLogStatement"});
+		comboModels[16] = new DefaultComboBoxModel(new String[]{"","MoreThanOneLogger","LoggerIsNotStaticFinal","SystemPrintln","AvoidPrintStackTrace","GuardLogStatementJavaUtil"});
+		comboModels[17] = new DefaultComboBoxModel(new String[]{"","ReplaceVectorWithList","ReplaceHashtableWithMap","ReplaceEnumerationWithIterator","AvoidEnumAsIdentifier","AvoidAssertAsIdentifier","IntegerInstantiation","ByteInstantiation","ShortInstantiation","LongInstantiation","JUnit4TestShouldUseBeforeAnnotation","JUnit4TestShouldUseAfterAnnotation","JUnit4TestShouldUseTestAnnotation","JUnit4SuitesShouldUseSuiteAnnotation","JUnitUseExpected"});
+		comboModels[18] = new DefaultComboBoxModel(new String[]{"","ShortVariable","LongVariable","ShortMethodName","VariableNamingConventions","MethodNamingConventions","ClassNamingConventions","AbstractNaming","AvoidDollarSigns","MethodWithSameNameAsEnclosingClass","SuspiciousHashcodeMethodName","SuspiciousConstantFieldName","SuspiciousEqualsMethodName","AvoidFieldNameMatchingTypeName","AvoidFieldNameMatchingMethodName","NoPackage","PackageCase","MisleadingVariableName","BooleanGetMethodName","ShortClassName","GenericsNaming"});
+		comboModels[19] = new DefaultComboBoxModel(new String[]{"","LocalVariableCouldBeFinal","MethodArgumentCouldBeFinal","AvoidInstantiatingObjectsInLoops","UseArrayListInsteadOfVector","SimplifyStartsWith","UseStringBufferForStringAppends","UseArraysAsList","AvoidArrayLoops","UnnecessaryWrapperObjectCreation","AddEmptyString","RedundantFieldInitializer","PrematureDeclaration"});
+		comboModels[20] = new DefaultComboBoxModel(new String[]{"","AvoidCatchingThrowable","SignatureDeclareThrowsException","ExceptionAsFlowControl","AvoidCatchingNPE","AvoidThrowingRawExceptionTypes","AvoidThrowingNullPointerException","AvoidRethrowingException","DoNotExtendJavaLangError","DoNotThrowExceptionInFinally","AvoidThrowingNewInstanceOfSameException","AvoidCatchingGenericException","AvoidLosingExceptionInformation"});
+		comboModels[21] = new DefaultComboBoxModel(new String[]{"","AvoidDuplicateLiterals","StringInstantiation","StringToString","InefficientStringBuffering","UnnecessaryCaseChange","UseStringBufferLength","AppendCharacterWithChar","ConsecutiveAppendsShouldReuse","ConsecutiveLiteralAppends","UseIndexOfChar","InefficientEmptyStringCheck","InsufficientStringBufferDeclaration","UselessStringValueOf","StringBufferInstantiationWithChar","UseEqualsToCompareStrings","AvoidStringBufferField"});
+		comboModels[22] = new DefaultComboBoxModel(new String[]{"","MethodReturnsInternalArray","ArrayIsStoredDirectly"});
+		comboModels[23] = new DefaultComboBoxModel(new String[]{"","LooseCoupling","CloneMethodMustImplementCloneable","UnusedImports","SignatureDeclareThrowsException"});
+		comboModels[24] = new DefaultComboBoxModel(new String[]{"","UnnecessaryConversionTemporary","UnnecessaryReturn","UnnecessaryFinalModifier","UselessOverridingMethod","UselessOperationOnImmutable","UnusedNullCheckInEquals","UselessParentheses","UselessQualifiedThis"});
+		comboModels[25] = new DefaultComboBoxModel(new String[]{"","UnusedPrivateField","UnusedLocalVariable","UnusedPrivateMethod","UnusedFormalParameter","UnusedModifier"});
+		//comboModels[0] = new DefaultComboBoxModel(new String[]{"","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",});
+
+	
+	
+	}
+
 	public RulesetCreator(String title){
 		
 		super(title);
-		
+		addWindowListener(this);
+		initComboBoxes();
 		Color gray=new Color(240,240,240);			/* Setting the background color */
-		setLayout(new FlowLayout());			/* Setting the layout of the GUI */
-		setBackground(gray);					/* Setting the background color */
+		setLayout(new FlowLayout());				/* Setting the layout of the GUI */
+		setBackground(gray);						/* Setting the background color */
 	//
-		//addWindowListener(this);				/* Adding the certain window listener for reacting to the user's
-//												   commands for closing and minimizing the window.
+		//addWindowListener(this);					/* Adding the certain window listener for reacting to the user's
+//													   commands for closing and minimizing the window.
 //													*/
-		
+		String[] availRuleSets = {"android","basic","braces","clone","codesize","comments","controversial","coupling","design","empty","finalizers","imports","j2ee","javabeans","junit","logging-jakarta-commons","logging-java","migrating","naming","optimizations","strictexception","strings","sunsecure","typeresolution","unnecessary","unusedcode","unusedcode", "imports"};
+
+		rulesets = new JComboBox(availRuleSets);
+		rules = new JComboBox(comboModels[0]);
 		rulesetName = new TextField();
 		specificRuleName = new TextField();
 		excludeRule = new TextField();
 		fileName = new TextField();
 		console = new JTextArea(10,40);
+		console.setLineWrap(true);				
+		console.setEditable(false);			
 		JScrollPane sp=new JScrollPane(console);
 		sp.setVerticalScrollBarPolicy(
 			    JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -76,6 +127,9 @@ BufferedWriter writer;
 		create = new JButton("Create");
 		add = new JButton("Add Rule");
 		save = new JButton("Save");
+		
+		/* List Feature*/
+		addFromList = new JButton("Add");
 		
 		rulesetName.setColumns(20);
 		specificRuleName.setColumns(20);
@@ -89,18 +143,26 @@ BufferedWriter writer;
 		add(specificRuleName);
 		add(excludeRule);
 		add(add);
-		add(console);
+		add(sp);
+		//add(console);
+		add(rulesets);
+		add(rules);
+		add(addFromList);
 		
 		create.addActionListener(this);
 		save.addActionListener(this);
 		add.addActionListener(this);
+		
+		/* An action listener for the parent ComboBox */
+		rulesets.addActionListener(this);
+		addFromList.addActionListener(this);
 	}
 	
 	public static void main(String[] args) throws Exception{
 		
 		RulesetCreator rc = new RulesetCreator("PMD RuleSet Creator");
 		
-		rc.setSize(500,250);				  /* Setting the size of the frame */
+		rc.setSize(520,320);				  /* Setting the size of the frame */
 		rc.setVisible(true);				  /* Making the frame visible to the user */
 		
 	}
@@ -177,6 +239,42 @@ BufferedWriter writer;
 					System.out.println(ex.getMessage());
 				}
 					
+			}else if (e.getSource()==rulesets){
+				System.out.println();
+				System.out.println("Ruleset selected");
+				System.out.println("Updating the rules list!");
+				System.out.println("Rules list updated");
+				rules.setModel(comboModels[rulesets.getSelectedIndex()]);
+				
+			}else if(e.getSource()==addFromList){
+				
+				System.out.println("Source found -> Add From List Button Pressed");
+				
+				/* Check the fields and add the appropriate entry */
+				try{
+					writer.newLine();
+					
+					if("".equals(rules.getSelectedItem().toString())){
+						writer.write("<rule ref=\"rulesets/java/" + rulesets.getSelectedItem().toString() + ".xml\"/>");
+						System.out.println("<rule ref=\"rulesets/java/" + rulesets.getSelectedItem().toString() + ".xml\"/>");
+					}else{
+						writer.write("<rule ref=\"rulesets/java/" + rulesets.getSelectedItem().toString() + ".xml/" + rules.getSelectedItem().toString() + "\"/>");
+						System.out.println("<rule ref=\"rulesets/java/" + rulesets.getSelectedItem().toString() + ".xml/" + rules.getSelectedItem().toString() + "\"/>");
+					}
+						
+					writer.newLine();
+				}catch(IOException ex){
+					System.out.println("IOException caught while adding a rule to the ruleset.");
+					System.out.println(ex.getMessage());
+				}
+				
+				/* Inform the user that his rule is succesfully added to the ruleset */
+				console.append("Rule entry: " + rulesets.getSelectedItem().toString() + ".xml/" + rules.getSelectedItem().toString() + " successfully added! \n");
+				
+				/* Clear the fields to accept the new entry */
+				specificRuleName.setText("");
+				rulesetName.setText("");
+				
 			}else{
 					System.out.println("False Alarm!!");
 				
@@ -184,7 +282,16 @@ BufferedWriter writer;
 			System.out.println();
 		}
 		
-	
+		 public void windowClosing(WindowEvent arg0) {
+			    System.exit(0);
+			  }
+
+			  public void windowOpened(WindowEvent arg0) {}
+			  public void windowClosed(WindowEvent arg0) {}
+			  public void windowIconified(WindowEvent arg0) {}
+			  public void windowDeiconified(WindowEvent arg0) {}
+			  public void windowActivated(WindowEvent arg0) {}
+			  public void windowDeactivated(WindowEvent arg0) {}
   }
 
 
