@@ -62,7 +62,11 @@ static DefaultComboBoxModel[] comboModels;
 static JButton addFromList;
 
 
+	/**
+	 * 	Initialize the ComboBoxes that hold the java rulesets.
+	 */
 	public static void initComboBoxes(){
+		
 		String[] availRuleSets = {"android","basic","braces","clone","codesize","comments","controversial","coupling","design","empty","finalizers","imports","j2ee","javabeans","junit","logging-jakarta-commons","logging-java","migrating","naming","optimizations","strictexception","strings","sunsecure","typeresolution","unnecessary","unusedcode","unusedcode", "imports"};
 		comboModels = new DefaultComboBoxModel[26];
 		comboModels[0] = new DefaultComboBoxModel(new String[]{"","CallSuperFirst","CallSuperLast","DoNotHardCodeSDCard"});
@@ -91,10 +95,9 @@ static JButton addFromList;
 		comboModels[23] = new DefaultComboBoxModel(new String[]{"","LooseCoupling","CloneMethodMustImplementCloneable","UnusedImports","SignatureDeclareThrowsException"});
 		comboModels[24] = new DefaultComboBoxModel(new String[]{"","UnnecessaryConversionTemporary","UnnecessaryReturn","UnnecessaryFinalModifier","UselessOverridingMethod","UselessOperationOnImmutable","UnusedNullCheckInEquals","UselessParentheses","UselessQualifiedThis"});
 		comboModels[25] = new DefaultComboBoxModel(new String[]{"","UnusedPrivateField","UnusedLocalVariable","UnusedPrivateMethod","UnusedFormalParameter","UnusedModifier"});
+		
+		/* In order to add a new ruleset, add a new entry as the one below */
 		//comboModels[0] = new DefaultComboBoxModel(new String[]{"","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",});
-
-	
-	
 	}
 
 	public RulesetCreator(String title){
@@ -105,10 +108,8 @@ static JButton addFromList;
 		Color gray=new Color(240,240,240);			/* Setting the background color */
 		setLayout(new FlowLayout());				/* Setting the layout of the GUI */
 		setBackground(gray);						/* Setting the background color */
-	//
-		//addWindowListener(this);					/* Adding the certain window listener for reacting to the user's
-//													   commands for closing and minimizing the window.
-//													*/
+		
+		/* Initialize the ComboBox with the availiable RuleSets */
 		String[] availRuleSets = {"android","basic","braces","clone","codesize","comments","controversial","coupling","design","empty","finalizers","imports","j2ee","javabeans","junit","logging-jakarta-commons","logging-java","migrating","naming","optimizations","strictexception","strings","sunsecure","typeresolution","unnecessary","unusedcode","unusedcode", "imports"};
 
 		rulesets = new JComboBox(availRuleSets);
@@ -158,6 +159,10 @@ static JButton addFromList;
 		addFromList.addActionListener(this);
 	}
 	
+	
+	/**
+	 *  The main method. It just creates the JFrame that represents the app's GUI.
+	 */
 	public static void main(String[] args) throws Exception{
 		
 		RulesetCreator rc = new RulesetCreator("PMD RuleSet Creator");
@@ -167,7 +172,12 @@ static JButton addFromList;
 		
 	}
 	
-		public void actionPerformed(ActionEvent e){
+	
+	/**
+	 * The action listener of the GUI.
+	 */
+	
+	public void actionPerformed(ActionEvent e){
 			
 			System.out.println("Action Listener Invoked");
 			
@@ -176,6 +186,7 @@ static JButton addFromList;
 				String tempFileName = fileName.getText();
 				console.append("The requested file name is: " + tempFileName + "\n");
 				System.out.println("The requested file name is: " + tempFileName);
+				
 			 try{
 				 	 writer = new BufferedWriter(
 		                new FileWriter(tempFileName));
@@ -282,6 +293,10 @@ static JButton addFromList;
 			System.out.println();
 		}
 		
+	/**
+	 * Action done when the "X" button is pressed.
+	 * Here we just terminate the application.
+	 */
 		 public void windowClosing(WindowEvent arg0) {
 			    System.exit(0);
 			  }
