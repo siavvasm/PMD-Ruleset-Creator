@@ -39,6 +39,8 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.TargetDataLine;
 import javax.sound.sampled.Line;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 
 public class RulesetCreator  extends Frame  implements WindowListener,ActionListener   {
 	
@@ -99,19 +101,42 @@ static JButton addFromList;
 		/* In order to add a new ruleset, add a new entry as the one below */
 		//comboModels[0] = new DefaultComboBoxModel(new String[]{"","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",});
 	}
+	public static void initComboBoxes2(){
+		 try {
 
+				SAXParserFactory factory = SAXParserFactory.newInstance();
+				SAXParser saxParser = factory.newSAXParser();
+
+				MyHandler handler = new MyHandler();
+
+				saxParser.parse("C:/Users/Miltos/Desktop/java_rules.xml", handler);
+			 
+			  } catch (Exception e) {
+			       e.printStackTrace();
+			     }
+		 
+		System.out.println("The first object in the list : " + MyHandler.ruleList.get(0));
+		System.out.println("The first object in ruleset list : " + MyHandler.ruleSetList.get(0));
+			  
+	}
 	public RulesetCreator(String title){
 		
 		super(title);
 		addWindowListener(this);
 		initComboBoxes();
+		initComboBoxes2();
 		Color gray=new Color(240,240,240);			/* Setting the background color */
 		setLayout(new FlowLayout());				/* Setting the layout of the GUI */
 		setBackground(gray);						/* Setting the background color */
 		
 		/* Initialize the ComboBox with the availiable RuleSets */
-		String[] availRuleSets = {"android","basic","braces","clone","codesize","comments","controversial","coupling","design","empty","finalizers","imports","j2ee","javabeans","junit","logging-jakarta-commons","logging-java","migrating","naming","optimizations","strictexception","strings","sunsecure","typeresolution","unnecessary","unusedcode","unusedcode", "imports"};
-
+		//String[] availRuleSets = {"android","basic","braces","clone","codesize","comments","controversial","coupling","design","empty","finalizers","imports","j2ee","javabeans","junit","logging-jakarta-commons","logging-java","migrating","naming","optimizations","strictexception","strings","sunsecure","typeresolution","unnecessary","unusedcode","unusedcode", "imports"};
+		
+		String[] availRuleSets = new String[MyHandler.ruleSetList.size()];
+		for (int i=0; i < MyHandler.ruleSetList.size(); i++){
+			availRuleSets[i] = MyHandler.ruleSetList.get(i);
+		}
+			
 		rulesets = new JComboBox(availRuleSets);
 		rules = new JComboBox(comboModels[0]);
 		rulesetName = new TextField();

@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<rules-pmd>
+<ruleset name="android">
+	<rule>CallSuperFirst</rule>
+	<rule>CallSuperLast</rule>
+	<rule>DoNotHardCodeSDCard</rule>
+</ruleset>
+
+<ruleset name="braces">
+	<rule>IfStmtsMustUseBraces</rule>
+	<rule>WhileLoopsMustUseBraces</rule>
+	<rule>IfElseStmtsMustUseBraces</rule>
+	<rule>ForLoopsMustUseBraces</rule>
+</ruleset>
+
+<ruleset name="basic">
+	<rule>IfStmtsMustUseBraces</rule>
+	<rule>WhileLoopsMustUseBraces</rule>
+	<rule>IfElseStmtsMustUseBraces</rule>
+	<rule>ForLoopsMustUseBraces</rule>
+</ruleset>
+
+<ruleset name="clone">
+	<rule>IfStmtsMustUseBraces</rule>
+	<rule>WhileLoopsMustUseBraces</rule>
+	<rule>IfElseStmtsMustUseBraces</rule>
+	<rule>ForLoopsMustUseBraces</rule>
+</ruleset>
+
+<ruleset name="codesize">
+	<rule>IfStmtsMustUseBraces</rule>
+	<rule>WhileLoopsMustUseBraces</rule>
+	<rule>IfElseStmtsMustUseBraces</rule>
+	<rule>ForLoopsMustUseBraces</rule>
+</ruleset>
+
+<ruleset name="comments">
+	<rule>IfStmtsMustUseBraces</rule>
+	<rule>WhileLoopsMustUseBraces</rule>
+	<rule>IfElseStmtsMustUseBraces</rule>
+	<rule>ForLoopsMustUseBraces</rule>
+</ruleset>
+
+<ruleset name="controversial">
+	<rule>IfStmtsMustUseBraces</rule>
+	<rule>WhileLoopsMustUseBraces</rule>
+	<rule>IfElseStmtsMustUseBraces</rule>
+	<rule>ForLoopsMustUseBraces</rule>
+</ruleset>
+
+</rules-pmd>
