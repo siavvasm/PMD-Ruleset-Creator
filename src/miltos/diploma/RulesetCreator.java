@@ -67,42 +67,8 @@ static JButton addFromList;
 	/**
 	 * 	Initialize the ComboBoxes that hold the java rulesets.
 	 */
-	public static void initComboBoxes(){
-		
-		String[] availRuleSets = {"android","basic","braces","clone","codesize","comments","controversial","coupling","design","empty","finalizers","imports","j2ee","javabeans","junit","logging-jakarta-commons","logging-java","migrating","naming","optimizations","strictexception","strings","sunsecure","typeresolution","unnecessary","unusedcode","unusedcode", "imports"};
-		comboModels = new DefaultComboBoxModel[26];
-		comboModels[0] = new DefaultComboBoxModel(new String[]{"","CallSuperFirst","CallSuperLast","DoNotHardCodeSDCard"});
-		comboModels[1] = new DefaultComboBoxModel(new String[]{"","JumbledIncrementer","ForLoopShouldBeWhileLoop","OverrideBothEqualsAndHashcode","DoubleCheckedLocking","ReturnFromFinallyBlock","UnconditionalIfStatement","BooleanInstantiation","CollapsibleIfStatements","ClassCastExceptionWithToArray","AvoidDecimalLiteralsInBigDecimalConstructor","MisplacedNullCheck","AvoidThreadGroup","BrokenNullCheck","BigIntegerInstantiation","AvoidUsingOctalValues","AvoidUsingHardCodedIP","CheckResultSet","AvoidMultipleUnaryOperators","ExtendsObject","CheckSkipResult","AvoidBranchingStatementAsLastInLoop","DontCallThreadRun","DontUseFloatTypeForLoopIndices","SimplifiedTernary"});
-		comboModels[2] = new DefaultComboBoxModel(new String[]{"","IfStmtsMustUseBraces","WhileLoopsMustUseBraces","IfElseStmtsMustUseBraces","ForLoopsMustUseBraces"});
-		comboModels[3] = new DefaultComboBoxModel(new String[]{"","ProperCloneImplementation","CloneThrowsCloneNotSupportedException","CloneMethodMustImplementCloneable","CloneMethodReturnTypeMustMatchClassName","CloneMethodMustBePublic"});
-		comboModels[4] = new DefaultComboBoxModel(new String[]{"","NPathComplexity","ExcessiveMethodLength","ExcessiveParameterList","ExcessiveClassLength","CyclomaticComplexity","StdCyclomaticComplexity","ModifiedCyclomaticComplexity","ExcessivePublicCount","TooManyFields","NcssMethodCount","NcssTypeCount","NcssConstructorCount","TooManyMethods"});
-		comboModels[5] = new DefaultComboBoxModel(new String[]{"","CommentRequired","CommentSize","CommentContent","CommentDefaultAccessModifier"});
-		comboModels[6] = new DefaultComboBoxModel(new String[]{"","UnnecessaryConstructor","NullAssignment","OnlyOneReturn","AssignmentInOperand","AtLeastOneConstructor","DontImportSun","SuspiciousOctalEscape","CallSuperInConstructor","UnnecessaryParentheses","DefaultPackage","DataflowAnomalyAnalysis","AvoidFinalLocalVariable","AvoidUsingShortType","AvoidUsingVolatile","AvoidUsingNativeCode","AvoidAccessibilityAlteration","DoNotCallGarbageCollectionExplicitly","OneDeclarationPerLine","AvoidPrefixingMethodParameters","AvoidLiteralsInIfCondition","UseObjectForClearerAPI","UseConcurrentHashMap"});
-		comboModels[7] = new DefaultComboBoxModel(new String[]{"","CouplingBetweenObjects","ExcessiveImports","LooseCoupling","LoosePackageCoupling","LawOfDemeter"});
-		comboModels[8] = new DefaultComboBoxModel(new String[]{"","UseSingleton","UseUtilityClass","SimplifyBooleanReturns","SimplifyBooleanExpressions","SwitchStmtsShouldHaveDefault","AvoidDeeplyNestedIfStmts","AvoidReassigningParameters","SwitchDensity","ConstructorCallsOverridableMethod","AccessorClassGeneration","FinalFieldCouldBeStatic","CloseResource","NonStaticInitializer","DefaultLabelNotLastInSwitchStmt","NonCaseLabelInSwitchStatement","OptimizableToArrayCall","BadComparison","EqualsNull","ConfusingTernary","InstantiationToGetClass","IdempotentOperations","SimpleDateFormatNeedsLocale","ImmutableField","UseLocaleWithCaseConversions","AvoidProtectedFieldInFinalClass","AssignmentToNonFinalStatic","MissingStaticMethodInNonInstantiatableClass","AvoidSynchronizedAtMethodLevel","MissingBreakInSwitch","UseNotifyAllInsteadOfNotify","AvoidInstanceofChecksInCatchClause","AbstractClassWithoutAbstractMethod","SimplifyConditional","CompareObjectsWithEquals","PositionLiteralsFirstInComparisons","PositionLiteralsFirstInCaseInsensitiveComparisons","UnnecessaryLocalBeforeReturn","NonThreadSafeSingleton","SingleMethodSingleton","SingletonClassReturningNewInstance","UncommentedEmptyMethodBody","UncommentedEmptyConstructor","AvoidConstantsInterface","UnsynchronizedStaticDateFormatter","PreserveStackTrace","UseCollectionIsEmpty","ClassWithOnlyPrivateConstructorsShouldBeFinal","EmptyMethodInAbstractClassShouldBeAbstract","SingularField","ReturnEmptyArrayRatherThanNull","AbstractClassWithoutAnyMethod","TooFewBranchesForASwitchStatement","LogicInversion","UseVarargs","FieldDeclarationsShouldBeAtStartOfClass","GodClass","AvoidProtectedMethodInFinalClassNotExtending","","","","","","","","","","","","","","","","",});
-		comboModels[9] = new DefaultComboBoxModel(new String[]{"","EmptyCatchBlock","EmptyIfStmt","EmptyWhileStmt","EmptyTryBlock","EmptyFinallyBlock","EmptySwitchStatements","EmptySynchronizedBlock","EmptyStatementNotInLoop","EmptyInitializer","EmptyStatementBlock","EmptyStaticInitializer"});
-		comboModels[10] = new DefaultComboBoxModel(new String[]{"","EmptyFinalizer","FinalizeOnlyCallsSuperFinalize","FinalizeOverloaded","FinalizeDoesNotCallSuperFinalize","FinalizeShouldBeProtected","AvoidCallingFinalize"});
-		comboModels[11] = new DefaultComboBoxModel(new String[]{"","DuplicateImports","DontImportJavaLang","UnusedImports","ImportFromSamePackage","TooManyStaticImports","UnnecessaryFullyQualifiedName"});
-		comboModels[12] = new DefaultComboBoxModel(new String[]{"","UseProperClassLoader","MDBAndSessionBeanNamingConvention","RemoteSessionInterfaceNamingConvention","LocalInterfaceSessionNamingConvention","LocalHomeNamingConvention","RemoteInterfaceNamingConvention","DoNotCallSystemExit","StaticEJBFieldShouldBeFinal","DoNotUseThreads"});
-		comboModels[13] = new DefaultComboBoxModel(new String[]{"","BeanMembersShouldSerialize","MissingSerialVersionUID"});
-		comboModels[14] = new DefaultComboBoxModel(new String[]{"","JUnitStaticSuite","JUnitSpelling","JUnitAssertionsShouldIncludeMessage","JUnitTestsShouldIncludeAssert","TestClassWithoutTestCases","UnnecessaryBooleanAssertion","UseAssertEqualsInsteadOfAssertTrue","UseAssertSameInsteadOfAssertTrue","UseAssertNullInsteadOfAssertTrue","SimplifyBooleanAssertion","JUnitTestContainsTooManyAsserts","UseAssertTrueInsteadOfAssertEquals"});
-		comboModels[15] = new DefaultComboBoxModel(new String[]{"","UseCorrectExceptionLogging","ProperLogger","GuardDebugLogging","GuardLogStatement"});
-		comboModels[16] = new DefaultComboBoxModel(new String[]{"","MoreThanOneLogger","LoggerIsNotStaticFinal","SystemPrintln","AvoidPrintStackTrace","GuardLogStatementJavaUtil"});
-		comboModels[17] = new DefaultComboBoxModel(new String[]{"","ReplaceVectorWithList","ReplaceHashtableWithMap","ReplaceEnumerationWithIterator","AvoidEnumAsIdentifier","AvoidAssertAsIdentifier","IntegerInstantiation","ByteInstantiation","ShortInstantiation","LongInstantiation","JUnit4TestShouldUseBeforeAnnotation","JUnit4TestShouldUseAfterAnnotation","JUnit4TestShouldUseTestAnnotation","JUnit4SuitesShouldUseSuiteAnnotation","JUnitUseExpected"});
-		comboModels[18] = new DefaultComboBoxModel(new String[]{"","ShortVariable","LongVariable","ShortMethodName","VariableNamingConventions","MethodNamingConventions","ClassNamingConventions","AbstractNaming","AvoidDollarSigns","MethodWithSameNameAsEnclosingClass","SuspiciousHashcodeMethodName","SuspiciousConstantFieldName","SuspiciousEqualsMethodName","AvoidFieldNameMatchingTypeName","AvoidFieldNameMatchingMethodName","NoPackage","PackageCase","MisleadingVariableName","BooleanGetMethodName","ShortClassName","GenericsNaming"});
-		comboModels[19] = new DefaultComboBoxModel(new String[]{"","LocalVariableCouldBeFinal","MethodArgumentCouldBeFinal","AvoidInstantiatingObjectsInLoops","UseArrayListInsteadOfVector","SimplifyStartsWith","UseStringBufferForStringAppends","UseArraysAsList","AvoidArrayLoops","UnnecessaryWrapperObjectCreation","AddEmptyString","RedundantFieldInitializer","PrematureDeclaration"});
-		comboModels[20] = new DefaultComboBoxModel(new String[]{"","AvoidCatchingThrowable","SignatureDeclareThrowsException","ExceptionAsFlowControl","AvoidCatchingNPE","AvoidThrowingRawExceptionTypes","AvoidThrowingNullPointerException","AvoidRethrowingException","DoNotExtendJavaLangError","DoNotThrowExceptionInFinally","AvoidThrowingNewInstanceOfSameException","AvoidCatchingGenericException","AvoidLosingExceptionInformation"});
-		comboModels[21] = new DefaultComboBoxModel(new String[]{"","AvoidDuplicateLiterals","StringInstantiation","StringToString","InefficientStringBuffering","UnnecessaryCaseChange","UseStringBufferLength","AppendCharacterWithChar","ConsecutiveAppendsShouldReuse","ConsecutiveLiteralAppends","UseIndexOfChar","InefficientEmptyStringCheck","InsufficientStringBufferDeclaration","UselessStringValueOf","StringBufferInstantiationWithChar","UseEqualsToCompareStrings","AvoidStringBufferField"});
-		comboModels[22] = new DefaultComboBoxModel(new String[]{"","MethodReturnsInternalArray","ArrayIsStoredDirectly"});
-		comboModels[23] = new DefaultComboBoxModel(new String[]{"","LooseCoupling","CloneMethodMustImplementCloneable","UnusedImports","SignatureDeclareThrowsException"});
-		comboModels[24] = new DefaultComboBoxModel(new String[]{"","UnnecessaryConversionTemporary","UnnecessaryReturn","UnnecessaryFinalModifier","UselessOverridingMethod","UselessOperationOnImmutable","UnusedNullCheckInEquals","UselessParentheses","UselessQualifiedThis"});
-		comboModels[25] = new DefaultComboBoxModel(new String[]{"","UnusedPrivateField","UnusedLocalVariable","UnusedPrivateMethod","UnusedFormalParameter","UnusedModifier"});
-		
-		/* In order to add a new ruleset, add a new entry as the one below */
-		//comboModels[0] = new DefaultComboBoxModel(new String[]{"","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",});
-	}
 	public static void initComboBoxes2(){
-		 try {
+		try {
 
 				SAXParserFactory factory = SAXParserFactory.newInstance();
 				SAXParser saxParser = factory.newSAXParser();
@@ -115,15 +81,24 @@ static JButton addFromList;
 			       e.printStackTrace();
 			     }
 		 
-		System.out.println("The first object in the list : " + MyHandler.ruleList.get(0));
+		//System.out.println("The first object in the list : " + MyHandler.ruleList.get(0));
 		System.out.println("The first object in ruleset list : " + MyHandler.ruleSetList.get(0));
+		
+		comboModels = new DefaultComboBoxModel[MyHandler.ruleListVec.size()];
+	//	System.out.println("[DEBUG] The number of different rulesets found is : " + MyHandler.ruleListVec.size());
+	//	System.out.println("[DEBUG] Creating one combo box model for each ruleset");
+		
+		for (int i=0; i<MyHandler.ruleListVec.size(); i++){
+	//		System.out.println("[DEBUG]" + MyHandler.ruleListVec.get(i).size());
+			comboModels[i] = new DefaultComboBoxModel(MyHandler.ruleListVec.get(i));
+		}
 			  
 	}
 	public RulesetCreator(String title){
 		
 		super(title);
 		addWindowListener(this);
-		initComboBoxes();
+		//initComboBoxes();
 		initComboBoxes2();
 		Color gray=new Color(240,240,240);			/* Setting the background color */
 		setLayout(new FlowLayout());				/* Setting the layout of the GUI */
@@ -132,11 +107,13 @@ static JButton addFromList;
 		/* Initialize the ComboBox with the availiable RuleSets */
 		//String[] availRuleSets = {"android","basic","braces","clone","codesize","comments","controversial","coupling","design","empty","finalizers","imports","j2ee","javabeans","junit","logging-jakarta-commons","logging-java","migrating","naming","optimizations","strictexception","strings","sunsecure","typeresolution","unnecessary","unusedcode","unusedcode", "imports"};
 		
+		/* Copy the ruleset names to a string array */
 		String[] availRuleSets = new String[MyHandler.ruleSetList.size()];
 		for (int i=0; i < MyHandler.ruleSetList.size(); i++){
 			availRuleSets[i] = MyHandler.ruleSetList.get(i);
 		}
-			
+		
+		/* Create the ComboBoxes */
 		rulesets = new JComboBox(availRuleSets);
 		rules = new JComboBox(comboModels[0]);
 		rulesetName = new TextField();
