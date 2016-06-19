@@ -10,3 +10,4 @@ java language.
 	2.2 Refactoring and clean up
 	2.3 Remove the textfields
 	2.4 Add rulesets from different languages
+	2.5 (SOS) Use JavaFX for the implementation of the app's GUI.
